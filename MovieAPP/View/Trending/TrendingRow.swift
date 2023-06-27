@@ -14,12 +14,7 @@ struct TrendingRow: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            Label("Trending", systemImage: "bolt")
-                .font(.headline)
-                .foregroundColor(.primary)
-                .padding(.leading, 15)
-                .padding(.top, 5)
-//                .padding(.bottom)
+           
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top , spacing: 0) {
                     ForEach(trends) { trend in
@@ -31,6 +26,7 @@ struct TrendingRow: View {
                     
                 }
             }
+            
          
             
         }

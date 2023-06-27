@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct VideoDetailedView: View {
-    var trend: Results = Results(id: 385687 ,title: "Through My Window: Across the Sea", poster_path: "dAyJqJ8KoglZysttC6BfVmDFQUt.jpg")
+    var trend: Results = Results(id: 385687 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
     
     @ObservedObject var searchMovieID = MovieManagerAPI()
     
-    @State var isSet: Bool = false
+    @State var isLikeSet: Bool = false
+    @State var isWatchListSet: Bool = false
     
     var body: some View {
         ScrollView {
@@ -47,7 +48,11 @@ struct VideoDetailedView: View {
                 }
                 .padding(.leading, 15)
                 HStack(spacing: 15) {
-                    Gauge(value: searchMovieID.searchMovieID.vote_average, in: 1...10) {
+                    Gauge(value:  searchMovieID.searchMovieID.vote_average == 0 ?
+                        searchMovieID.searchSeriesId.vote_average
+                          :
+                        searchMovieID.searchMovieID.vote_average
+                    , in: 0...10) {
                         Text("Ratings")
                     }
                     .gaugeStyle(.accessoryCircularCapacity)
@@ -56,12 +61,11 @@ struct VideoDetailedView: View {
                    Spacer()
                     VStack {
                         Button {
-                                isSet.toggle()
-                            print(trend.media_type)
+                            isWatchListSet.toggle()
                             } label: {
-                                Label("WishList", systemImage: isSet ? "checkmark" : "plus.square.on.square")
+                                Label("WishList", systemImage: isWatchListSet ? "checkmark" : "plus.square.on.square")
                                     .labelStyle(.iconOnly)
-                                    .foregroundColor(isSet ? .green : .gray)
+                                    .foregroundColor(isWatchListSet ? .green : .gray)
                                     .font(.system(size: 25))
                         }
                         Text("WatchList")
@@ -69,11 +73,11 @@ struct VideoDetailedView: View {
                     }
                     VStack {
                         Button {
-                                isSet.toggle()
+                                isLikeSet.toggle()
                             } label: {
-                                Label("Like", systemImage: isSet ? "heart.fill" : "heart")
+                                Label("Like", systemImage: isLikeSet ? "heart.fill" : "heart")
                                     .labelStyle(.iconOnly)
-                                    .foregroundColor(isSet ? .red : .gray)
+                                    .foregroundColor(isLikeSet ? .red : .gray)
                                     .font(.system(size: 28))
                         }
                         Text("Like")
@@ -86,15 +90,34 @@ struct VideoDetailedView: View {
                 
                 GroupBox("Overview:") {
                     VStack(alignment: .leading) {
-                        Text(searchMovieID.searchMovieID.overview)
+                        if trend.media_type ?? "movie" == "movie"
+                        {
+                            Text(searchMovieID.searchMovieID.overview)
+                        }
+                        else {
+                            Text(searchMovieID.searchSeriesId.overview)
+                        }
+                        
                         HStack {
-                            ForEach(searchMovieID.searchMovieID.genres) { genre in
-                                Text(genre.name)
-                                    .font(.caption)
-                                    .padding(5)
-                                    .foregroundColor(.secondary)
-                                    .background(.gray)
-                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
+                            if trend.media_type ?? "movie" == "movie"
+                            {
+                                ForEach(searchMovieID.searchMovieID.genres) { genre in
+                                    Text(genre.name)
+                                        .font(.caption)
+                                        .padding(5)
+                                        .foregroundColor(.secondary)
+                                        .background(.gray)
+                                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
+                                }
+                            } else {
+                                ForEach(searchMovieID.searchSeriesId.genres) { genre in
+                                    Text(genre.name)
+                                        .font(.caption)
+                                        .padding(5)
+                                        .foregroundColor(.secondary)
+                                        .background(.gray)
+                                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
+                                }
                             }
                         }
                     }
@@ -103,7 +126,7 @@ struct VideoDetailedView: View {
                 .padding(.horizontal, 10)
                 .padding(.bottom, 10)
                 
-                if ((searchMovieID.searchTrailerMovieID.results?.isEmpty) != nil) {
+                if (searchMovieID.searchTrailerMovieID.results?.first?.key != "0")  {
                     YouTubeVideoView(videoId:searchMovieID.searchTrailerMovieID.results?.last?.key)
                         .frame(height: UIScreen.main.bounds.size.height * 0.3)
                         .padding(.horizontal, 10)
@@ -133,12 +156,16 @@ struct VideoDetailedView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             
-            if trend.media_type == "movie" {
+            if trend.media_type ?? "movie"  == "movie" {
+                print("Key: \(trend.id) ")
                 searchMovieID.fetchSeachMovieID(trend.id)
+                
             } else {
-                print("tv")
+                print("Key: \(trend.id) ")
+                
+                searchMovieID.fetchSeachSeriesId(trend.id)
+               
             }
-            
           
         }
         
