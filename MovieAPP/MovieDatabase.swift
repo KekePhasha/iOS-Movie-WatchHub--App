@@ -46,6 +46,13 @@ struct SearchMovieID: Codable {
     var runtime: Double = 0
 }
 
+struct SearchSeriesId: Codable {
+    var overview: String = ""
+    var vote_average: Double = 0
+    var genres: [Genre] = [Genre(id: 0, name: "")]
+
+}
+
 struct Genre: Codable, Identifiable {
     var id: Int = 0
     var name: String = ""
@@ -53,7 +60,7 @@ struct Genre: Codable, Identifiable {
 
 struct SearchTrailerMovieID: Codable {
     
-    var results: [Trailers]? = [Trailers(key: " ", type: " ")]
+    var results: [Trailers]? = [Trailers(key: "0", type: " ")]
 }
 
 struct Trailers: Codable {

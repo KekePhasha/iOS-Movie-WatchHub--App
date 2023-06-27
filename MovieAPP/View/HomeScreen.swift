@@ -19,13 +19,11 @@ struct HomeScreen: View {
                     TrendingRow(trends: movieManagerAPI.trendingResults)
                 }
                 .padding(.bottom, 10)
-    
-                
+                    
                 GroupBox {
                     Label("Popular Movies", systemImage: "flame.fill")
                         .foregroundColor(.red)
                 }
-                
               
             }
             .padding()
