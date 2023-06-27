@@ -8,17 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		90B3C6972A497D470037D88B /* MovieAPPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6962A497D470037D88B /* MovieAPPApp.swift */; };
-		90B3C6992A497D470037D88B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6982A497D470037D88B /* ContentView.swift */; };
+		90B3C6992A497D470037D88B /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6982A497D470037D88B /* HomeScreen.swift */; };
 		90B3C69B2A497D490037D88B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90B3C69A2A497D490037D88B /* Assets.xcassets */; };
 		90B3C69E2A497D490037D88B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90B3C69D2A497D490037D88B /* Preview Assets.xcassets */; };
+		90B3C6A92A498C200037D88B /* Monoton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90B3C6A82A498C200037D88B /* Monoton-Regular.ttf */; };
+		90B3C6AC2A49917A0037D88B /* MovieDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6AB2A49917A0037D88B /* MovieDatabase.swift */; };
+		90B3C6AF2A49A6300037D88B /* TrendingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6AE2A49A6300037D88B /* TrendingRow.swift */; };
+		90B3C6B12A49ACA60037D88B /* MovieManagerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6B02A49ACA50037D88B /* MovieManagerAPI.swift */; };
+		90B3C6B32A49BA320037D88B /* TrendingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6B22A49BA320037D88B /* TrendingItem.swift */; };
+		90FE18F22A49D1FB00FB389B /* VideoDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE18F12A49D1FB00FB389B /* VideoDetailedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		90B3C6932A497D470037D88B /* MovieAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90B3C6962A497D470037D88B /* MovieAPPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPPApp.swift; sourceTree = "<group>"; };
-		90B3C6982A497D470037D88B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		90B3C6982A497D470037D88B /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		90B3C69A2A497D490037D88B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		90B3C69D2A497D490037D88B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		90B3C6A72A498AF20037D88B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		90B3C6A82A498C200037D88B /* Monoton-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Monoton-Regular.ttf"; sourceTree = "<group>"; };
+		90B3C6AB2A49917A0037D88B /* MovieDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDatabase.swift; sourceTree = "<group>"; };
+		90B3C6AE2A49A6300037D88B /* TrendingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingRow.swift; sourceTree = "<group>"; };
+		90B3C6B02A49ACA50037D88B /* MovieManagerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManagerAPI.swift; sourceTree = "<group>"; };
+		90B3C6B22A49BA320037D88B /* TrendingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingItem.swift; sourceTree = "<group>"; };
+		90FE18F12A49D1FB00FB389B /* VideoDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +64,11 @@
 		90B3C6952A497D470037D88B /* MovieAPP */ = {
 			isa = PBXGroup;
 			children = (
+				90B3C6AA2A49914C0037D88B /* Model */,
+				90B3C6A72A498AF20037D88B /* Info.plist */,
+				90B3C6A42A498A100037D88B /* Resources */,
 				90B3C6962A497D470037D88B /* MovieAPPApp.swift */,
-				90B3C6982A497D470037D88B /* ContentView.swift */,
+				90B3C6AD2A49A5E90037D88B /* View */,
 				90B3C69A2A497D490037D88B /* Assets.xcassets */,
 				90B3C69C2A497D490037D88B /* Preview Content */,
 			);
@@ -65,6 +81,50 @@
 				90B3C69D2A497D490037D88B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		90B3C6A42A498A100037D88B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90B3C6A52A498A230037D88B /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		90B3C6A52A498A230037D88B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				90B3C6A82A498C200037D88B /* Monoton-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		90B3C6AA2A49914C0037D88B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90B3C6AB2A49917A0037D88B /* MovieDatabase.swift */,
+				90B3C6B02A49ACA50037D88B /* MovieManagerAPI.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		90B3C6AD2A49A5E90037D88B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90B3C6982A497D470037D88B /* HomeScreen.swift */,
+				90FE18F02A49D01800FB389B /* Trending */,
+				90FE18F12A49D1FB00FB389B /* VideoDetailedView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90FE18F02A49D01800FB389B /* Trending */ = {
+			isa = PBXGroup;
+			children = (
+				90B3C6AE2A49A6300037D88B /* TrendingRow.swift */,
+				90B3C6B22A49BA320037D88B /* TrendingItem.swift */,
+			);
+			path = Trending;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +185,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90B3C6A92A498C200037D88B /* Monoton-Regular.ttf in Resources */,
 				90B3C69E2A497D490037D88B /* Preview Assets.xcassets in Resources */,
 				90B3C69B2A497D490037D88B /* Assets.xcassets in Resources */,
 			);
@@ -137,8 +198,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90B3C6992A497D470037D88B /* ContentView.swift in Sources */,
+				90B3C6AC2A49917A0037D88B /* MovieDatabase.swift in Sources */,
+				90B3C6B12A49ACA60037D88B /* MovieManagerAPI.swift in Sources */,
+				90B3C6992A497D470037D88B /* HomeScreen.swift in Sources */,
 				90B3C6972A497D470037D88B /* MovieAPPApp.swift in Sources */,
+				90B3C6AF2A49A6300037D88B /* TrendingRow.swift in Sources */,
+				90FE18F22A49D1FB00FB389B /* VideoDetailedView.swift in Sources */,
+				90B3C6B32A49BA320037D88B /* TrendingItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +336,7 @@
 				DEVELOPMENT_TEAM = 4883634A4Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MovieAPP/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +366,7 @@
 				DEVELOPMENT_TEAM = 4883634A4Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MovieAPP/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
