@@ -16,7 +16,7 @@ struct Results: Codable, Identifiable{
     var id: Int = 385687
     var title: String? = "Keke"
     var name: String? = "Keke"
-    var media_type: String = "Movie"
+    var media_type: String? = "movie"
     var poster_path: String = "rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg"
     var vote_average: Double = 9.5
     var image: any View {

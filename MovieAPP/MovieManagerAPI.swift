@@ -11,6 +11,7 @@ class MovieManagerAPI: ObservableObject {
     
     private var apiKey = "b382b782a8b5af28cca047715d980c31"
     @Published var trendingResults = [Results]()
+    @Published var popularMoviesResults = [Results]()
     @Published var searchMovieID = SearchMovieID()
     @Published var searchSeriesId = SearchSeriesId()
     @Published var searchTrailerMovieID = SearchTrailerMovieID()
@@ -29,6 +30,38 @@ class MovieManagerAPI: ObservableObject {
                             let results = try decoder.decode(Trending.self, from: safeDate)
                             DispatchQueue.main.async {
                                 self.trendingResults = results.results
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+            
+        }
+     
+        fetchAllPopularData()
+    }
+    
+    func fetchAllPopularData() {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.popularMoviesResults = results.results
+                        
                             }
                         } catch {
                             print(error)

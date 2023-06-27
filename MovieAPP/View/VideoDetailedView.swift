@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct VideoDetailedView: View {
-    var trend: Results = Results(id: 385687 ,title: "Through My Window: Across the Sea", poster_path: "dAyJqJ8KoglZysttC6BfVmDFQUt.jpg")
+    var trend: Results = Results(id: 385687 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
     
     @ObservedObject var searchMovieID = MovieManagerAPI()
     
@@ -62,7 +62,6 @@ struct VideoDetailedView: View {
                     VStack {
                         Button {
                             isWatchListSet.toggle()
-                            print(trend.media_type)
                             } label: {
                                 Label("WishList", systemImage: isWatchListSet ? "checkmark" : "plus.square.on.square")
                                     .labelStyle(.iconOnly)
@@ -91,7 +90,7 @@ struct VideoDetailedView: View {
                 
                 GroupBox("Overview:") {
                     VStack(alignment: .leading) {
-                        if trend.media_type == "movie"
+                        if trend.media_type ?? "movie" == "movie"
                         {
                             Text(searchMovieID.searchMovieID.overview)
                         }
@@ -100,7 +99,7 @@ struct VideoDetailedView: View {
                         }
                         
                         HStack {
-                            if trend.media_type == "movie"
+                            if trend.media_type ?? "movie" == "movie"
                             {
                                 ForEach(searchMovieID.searchMovieID.genres) { genre in
                                     Text(genre.name)
@@ -157,14 +156,16 @@ struct VideoDetailedView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             
-            if trend.media_type == "movie" {
+            if trend.media_type ?? "movie"  == "movie" {
+                print("Key: \(trend.id) ")
                 searchMovieID.fetchSeachMovieID(trend.id)
+                
             } else {
-                print("tv")
+                print("Key: \(trend.id) ")
+                
                 searchMovieID.fetchSeachSeriesId(trend.id)
-                print(searchMovieID.searchTrailerMovieID.results?.last?.key ?? "No key")
+               
             }
-            
           
         }
         
