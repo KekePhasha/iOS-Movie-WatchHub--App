@@ -14,15 +14,21 @@ struct HomeScreen: View {
     var body: some View {
         NavigationView {
            
-            List {
+            ScrollView {
+                GroupBox {
+                    TrendingRow(trends: movieManagerAPI.trendingResults)
+                }
+                .padding(.bottom, 10)
     
-                TrendingRow(trends: movieManagerAPI.trendingResults)
-               
-                Label("Popular Movies", systemImage: "flame.fill")
-                    .foregroundColor(.red)
-                    
+                
+                GroupBox {
+                    Label("Popular Movies", systemImage: "flame.fill")
+                        .foregroundColor(.red)
+                }
+                
+              
             }
-         
+            .padding()
             .navigationTitle("Home")
             .onAppear {
                 movieManagerAPI.fetchAllTrendingData()

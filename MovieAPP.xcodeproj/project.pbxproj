@@ -17,6 +17,7 @@
 		90B3C6B12A49ACA60037D88B /* MovieManagerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6B02A49ACA50037D88B /* MovieManagerAPI.swift */; };
 		90B3C6B32A49BA320037D88B /* TrendingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B3C6B22A49BA320037D88B /* TrendingItem.swift */; };
 		90FE18F22A49D1FB00FB389B /* VideoDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE18F12A49D1FB00FB389B /* VideoDetailedView.swift */; };
+		90FE18F42A4AE59900FB389B /* YouTubeVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE18F32A4AE59900FB389B /* YouTubeVideoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		90B3C6B02A49ACA50037D88B /* MovieManagerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManagerAPI.swift; sourceTree = "<group>"; };
 		90B3C6B22A49BA320037D88B /* TrendingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingItem.swift; sourceTree = "<group>"; };
 		90FE18F12A49D1FB00FB389B /* VideoDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailedView.swift; sourceTree = "<group>"; };
+		90FE18F32A4AE59900FB389B /* YouTubeVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				90B3C6982A497D470037D88B /* HomeScreen.swift */,
 				90FE18F02A49D01800FB389B /* Trending */,
 				90FE18F12A49D1FB00FB389B /* VideoDetailedView.swift */,
+				90FE18F32A4AE59900FB389B /* YouTubeVideoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90FE18F42A4AE59900FB389B /* YouTubeVideoView.swift in Sources */,
 				90B3C6AC2A49917A0037D88B /* MovieDatabase.swift in Sources */,
 				90B3C6B12A49ACA60037D88B /* MovieManagerAPI.swift in Sources */,
 				90B3C6992A497D470037D88B /* HomeScreen.swift in Sources */,
