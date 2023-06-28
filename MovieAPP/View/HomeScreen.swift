@@ -17,9 +17,16 @@ struct HomeScreen: View {
             ScrollView {
                 GroupBox {
                     VStack(alignment: .leading) {
-                        Label("Trending", systemImage: "bolt")
-                            .font(.headline)
-                            .foregroundColor(.primary)
+                        HStack {
+                            Label("Trending", systemImage: "bolt")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .labelStyle(.iconOnly)
+                            Text("Trending")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                        }
+                       
                         TrendingRow(trends: movieManagerAPI.trendingResults)
                         
                     }
@@ -29,9 +36,18 @@ struct HomeScreen: View {
                     
                 GroupBox {
                     VStack(alignment: .leading) {
-                        Label("Popular Movies", systemImage: "flame.fill")
-                            .font(.headline)
-                            .foregroundColor(.red)
+                        
+                        HStack {
+                            Label("Popular Movies", systemImage: "flame.fill")
+                                .font(.headline)
+                                .foregroundColor(.red)
+                                .labelStyle(.iconOnly)
+                            Text("Popular Movies")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                        }
+                        
+                       
                         TrendingRow(trends: movieManagerAPI.popularMoviesResults)
                     }
                 }
@@ -39,8 +55,17 @@ struct HomeScreen: View {
               
                 GroupBox {
                     VStack(alignment: .leading) {
-                        Label("Popular Series", systemImage: "flame.fill")
-                            .foregroundColor(.red)
+                        HStack {
+                            Label("Popular Movies", systemImage: "flame.fill")
+                                .font(.headline)
+                                .foregroundColor(.red)
+                                .labelStyle(.iconOnly)
+                            Text("Popular Series")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                        }
+                        
+                    
                         
                     }
                 }
