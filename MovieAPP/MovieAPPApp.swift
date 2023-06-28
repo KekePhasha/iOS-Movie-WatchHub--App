@@ -18,25 +18,26 @@ struct MovieAPPApp: App {
                     Label("Home", systemImage: "house")
                 }
                     .tag(selection)
-                Text("Movies")
+                MovieScreen()
                     .tabItem {
                         Label("Movies", systemImage: "play.rectangle")
                         
                     }
                     .tag(selection)
-                Text("Series")
+                SeriesScreen()
                     .tabItem {
                         Label("Series", systemImage: "square.stack")
                         
                     }
                     .tag(selection)
-                Text("Tab Content 2")
+                SearchScreen()
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
                         
                     }
                     .tag(selection)
             }
+           
             
         }
     }
