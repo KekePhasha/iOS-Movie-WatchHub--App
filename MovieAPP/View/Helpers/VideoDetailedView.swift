@@ -10,10 +10,23 @@ import SwiftUI
 struct VideoDetailedView: View {
     var trend: Results = Results(id: 385687 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
     
+    var type: String?
+
+    
     @ObservedObject var searchMovieID = MovieManagerAPI()
     
     @State var isLikeSet: Bool = false
     @State var isWatchListSet: Bool = false
+    
+    func mediaType(_ media: String? = " ")-> String{
+    
+        if  media == nil {
+            return trend.media_type!
+        } else {
+            return media!
+        }
+            
+    }
     
     var body: some View {
         ScrollView {
@@ -22,7 +35,6 @@ struct VideoDetailedView: View {
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(trend.poster_path)"), content: {
                     image in
                     image
-                        .renderingMode(.original)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(height: 300)
@@ -41,10 +53,18 @@ struct VideoDetailedView: View {
                         .bold()
 //                        .padding(.bottom, 5)
                 HStack {
-                    Text(String (searchMovieID.searchMovieID.runtime/60))
-                        .font(.subheadline)
-                    Text(searchMovieID.searchMovieID.release_date)
-                        .font(.subheadline)
+                    
+                    if mediaType(type) == "movie" {
+                        Text(String (searchMovieID.searchMovieID.runtime/60))
+                            .font(.subheadline)
+                        Text(searchMovieID.searchMovieID.release_date)
+                            .font(.subheadline)
+                    } else {
+                        Text(String ("Testing"))
+                            .font(.subheadline)
+                        Text("Testing")
+                            .font(.subheadline)
+                    }
                 }
                 .padding(.leading, 15)
                 HStack(spacing: 15) {
@@ -90,7 +110,7 @@ struct VideoDetailedView: View {
                 
                 GroupBox("Overview:") {
                     VStack(alignment: .leading) {
-                        if trend.media_type ?? "movie" == "movie"
+                        if mediaType(type) == "movie"
                         {
                             Text(searchMovieID.searchMovieID.overview)
                         }
@@ -99,7 +119,7 @@ struct VideoDetailedView: View {
                         }
                         
                         HStack {
-                            if trend.media_type ?? "movie" == "movie"
+                            if mediaType(type) == "movie"
                             {
                                 ForEach(searchMovieID.searchMovieID.genres) { genre in
                                     Text(genre.name)
@@ -156,7 +176,7 @@ struct VideoDetailedView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             
-            if trend.media_type ?? "movie"  == "movie" {
+            if mediaType(type) == "movie" {
                 print("Key: \(trend.id) ")
                 searchMovieID.fetchSeachMovieID(trend.id)
                 
@@ -168,6 +188,7 @@ struct VideoDetailedView: View {
             }
           
         }
+    
         
 
     }

@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeScreen: View {
     
     @ObservedObject var movieManagerAPI = MovieManagerAPI()
+    @State var showingProfile = false
     
     var body: some View {
         NavigationView {
@@ -22,7 +23,7 @@ struct HomeScreen: View {
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                                 .labelStyle(.iconOnly)
-                            Text("Trending")
+                            Text("Trending Movies and Series")
                                 .font(.headline)
                                 .foregroundColor(.primary)
                         }
@@ -48,7 +49,7 @@ struct HomeScreen: View {
                         }
                         
                        
-                        TrendingRow(trends: movieManagerAPI.popularMoviesResults)
+                        TrendingRow(trends: movieManagerAPI.popularMoviesResults, type: "movie")
                     }
                 }
                 .padding(.bottom, 10)
@@ -56,14 +57,15 @@ struct HomeScreen: View {
                 GroupBox {
                     VStack(alignment: .leading) {
                         HStack {
-                            Label("Popular Movies", systemImage: "flame.fill")
+                            Label("Popular Movies", systemImage: "megaphone")
                                 .font(.headline)
-                                .foregroundColor(.red)
+                                .foregroundColor(.green)
                                 .labelStyle(.iconOnly)
                             Text("Popular Series")
                                 .font(.headline)
                                 .foregroundColor(.primary)
                         }
+                        TrendingRow(trends: movieManagerAPI.popularSeriesResults, type: "tv")
                         
                     
                         
@@ -74,8 +76,25 @@ struct HomeScreen: View {
             .padding()
             .navigationTitle("Home")
             .onAppear {
+                
                 movieManagerAPI.fetchAllTrendingData()
+                movieManagerAPI.fetchAllPopularSeries()
               
+            }
+            
+            
+            .toolbar {
+                Button {
+                    showingProfile.toggle()
+                } label: {
+                    Label("User Profile", systemImage: "person.crop.circle")
+                }
+
+            }
+            
+            .sheet(isPresented: $showingProfile) {
+                ProfileHost()
+                    
             }
             
         }

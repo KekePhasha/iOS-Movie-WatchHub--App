@@ -11,7 +11,11 @@ class MovieManagerAPI: ObservableObject {
     
     private var apiKey = "b382b782a8b5af28cca047715d980c31"
     @Published var trendingResults = [Results]()
+    @Published var trendingSeries = [Results]()
     @Published var popularMoviesResults = [Results]()
+    @Published var popularSeriesResults = [Results]()
+    @Published var mustSeeMovies = [Results]()
+    @Published var mustSeeSeries = [Results]()
     @Published var searchMovieID = SearchMovieID()
     @Published var searchSeriesId = SearchSeriesId()
     @Published var searchTrailerMovieID = SearchTrailerMovieID()
@@ -44,12 +48,43 @@ class MovieManagerAPI: ObservableObject {
             
         }
      
-        fetchAllPopularData()
+        fetchAllPopularMovies("popular")
+        
     }
     
-    func fetchAllPopularData() {
+//MARK: - Trending Series
+    func fetchTrendingSeries() {
+        if let url = URL(string: "https://api.themoviedb.org/3/trending/tv/week?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.trendingSeries = results.results
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+        }
         
-        if let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)") {
+    }
+
+//MARK: - Popular Movies
+    func fetchAllPopularMovies(_ query: String) {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/movie/\(query)?api_key=\(apiKey)") {
             
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
@@ -61,6 +96,97 @@ class MovieManagerAPI: ObservableObject {
                             let results = try decoder.decode(Trending.self, from: safeDate)
                             DispatchQueue.main.async {
                                 self.popularMoviesResults = results.results
+                        
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
+    func fetchMustSeeMovies() {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.mustSeeMovies = results.results
+                        
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+            
+        }
+    }
+
+    
+    func fetchAllPopularSeries() {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/tv/popular?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.popularSeriesResults = results.results
+                        
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
+    func fetchMustSeeSeries() {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.mustSeeSeries = results.results
                         
                             }
                         } catch {
