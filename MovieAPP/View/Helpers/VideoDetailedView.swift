@@ -15,8 +15,11 @@ struct VideoDetailedView: View {
     
     @ObservedObject var searchMovieID = MovieManagerAPI()
     
+    var formater = Formater()
+    
     @State var isLikeSet: Bool = false
     @State var isWatchListSet: Bool = false
+    @State var seasonNumber: Int = 1
     
     func mediaType(_ media: String? = " ")-> String{
     
@@ -55,9 +58,9 @@ struct VideoDetailedView: View {
                 HStack {
                     
                     if mediaType(type) == "movie" {
-                        Text(String (searchMovieID.searchMovieID.runtime/60))
+                        Text(String (formater.formatRuntime( searchMovieID.searchMovieID.runtime/60)))
                             .font(.subheadline)
-                        Text(searchMovieID.searchMovieID.release_date)
+                        Text(formater.formatYear(searchMovieID.searchMovieID.release_date))
                             .font(.subheadline)
                     } else {
                         Text(String ("Testing"))
@@ -158,10 +161,44 @@ struct VideoDetailedView: View {
                 }
                 
                 
+                if mediaType(type) == "movie"{
+                    GroupBox("Episodes:") {
+                        VStack(alignment: .leading) {
+                            Menu("Season \(seasonNumber)" ) {
+                                Button("Season 1") {
+                                    print("name")
+                                    seasonNumber = 1
+                                }
+                                Button("Season 2") {
+                                    print("name")
+                                    seasonNumber = 2
+                                }
+                                Button("Season 3") {
+                                    print("name")
+                                    seasonNumber = 3
+                                }
+                            }
+                        EpisodeViewSingle()
+                           
+                        }
+                        
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.bottom, 10)
+                }
+                
+                
+                
                 GroupBox("Simialr To:", content: {
                     ZStack(alignment: .leading) {
                         HStack {
-                            Text("Keke")
+                            if mediaType(type) == "movie"
+                            {
+                                TrendingRow(trends: searchMovieID.similarMovies, type: "movie")
+                            } else {
+                                
+                                TrendingRow(trends: searchMovieID.similarSeries, type: "tv")
+                            }
                         }
                     }
                 })
@@ -177,13 +214,15 @@ struct VideoDetailedView: View {
         .onAppear {
             
             if mediaType(type) == "movie" {
-                print("Key: \(trend.id) ")
+                
                 searchMovieID.fetchSeachMovieID(trend.id)
+                searchMovieID.fetchSimialrMovies(trend.id)
                 
             } else {
                 print("Key: \(trend.id) ")
                 
                 searchMovieID.fetchSeachSeriesId(trend.id)
+                searchMovieID.fetchSimialrSeries(trend.id)
                
             }
           

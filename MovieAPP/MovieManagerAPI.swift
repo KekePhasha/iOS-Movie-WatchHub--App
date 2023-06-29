@@ -20,6 +20,9 @@ class MovieManagerAPI: ObservableObject {
     @Published var searchSeriesId = SearchSeriesId()
     @Published var searchTrailerMovieID = SearchTrailerMovieID()
     
+    @Published var similarMovies = [Results]()
+    @Published var similarSeries = [Results]()
+    
     func fetchAllTrendingData() {
         
         if let url = URL(string: "https://api.themoviedb.org/3/trending/all/day?api_key=\(apiKey)") {
@@ -47,12 +50,12 @@ class MovieManagerAPI: ObservableObject {
             task.resume()
             
         }
-     
+        
         fetchAllPopularMovies("popular")
         
     }
     
-//MARK: - Trending Series
+    //MARK: - Trending Series
     func fetchTrendingSeries() {
         if let url = URL(string: "https://api.themoviedb.org/3/trending/tv/week?api_key=\(apiKey)") {
             
@@ -80,8 +83,8 @@ class MovieManagerAPI: ObservableObject {
         }
         
     }
-
-//MARK: - Popular Movies
+    
+    //MARK: - Popular Movies
     func fetchAllPopularMovies(_ query: String) {
         
         if let url = URL(string: "https://api.themoviedb.org/3/movie/\(query)?api_key=\(apiKey)") {
@@ -96,7 +99,7 @@ class MovieManagerAPI: ObservableObject {
                             let results = try decoder.decode(Trending.self, from: safeDate)
                             DispatchQueue.main.async {
                                 self.popularMoviesResults = results.results
-                        
+                                
                             }
                         } catch {
                             print(error)
@@ -126,7 +129,7 @@ class MovieManagerAPI: ObservableObject {
                             let results = try decoder.decode(Trending.self, from: safeDate)
                             DispatchQueue.main.async {
                                 self.mustSeeMovies = results.results
-                        
+                                
                             }
                         } catch {
                             print(error)
@@ -141,7 +144,7 @@ class MovieManagerAPI: ObservableObject {
             
         }
     }
-
+    
     
     func fetchAllPopularSeries() {
         
@@ -157,7 +160,7 @@ class MovieManagerAPI: ObservableObject {
                             let results = try decoder.decode(Trending.self, from: safeDate)
                             DispatchQueue.main.async {
                                 self.popularSeriesResults = results.results
-                        
+                                
                             }
                         } catch {
                             print(error)
@@ -187,7 +190,7 @@ class MovieManagerAPI: ObservableObject {
                             let results = try decoder.decode(Trending.self, from: safeDate)
                             DispatchQueue.main.async {
                                 self.mustSeeSeries = results.results
-                        
+                                
                             }
                         } catch {
                             print(error)
@@ -286,6 +289,69 @@ class MovieManagerAPI: ObservableObject {
             }
             task.resume()
         }
+    }
+    
+    
+    //MARK: - Simialr Movies
+    
+    func fetchSimialrMovies(_ id: Int) {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/movie/\(id)/recommendations?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.similarMovies = results.results
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+            
+        }
+        
+    }
+    
+    func fetchSimialrSeries(_ id: Int) {
+        
+        if let url = URL(string: "https://api.themoviedb.org/3/tv/\(id)/recommendations?api_key=\(apiKey)") {
+            
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    let decoder = JSONDecoder()
+                    
+                    if let safeDate = data {
+                        do {
+                            let results = try decoder.decode(Trending.self, from: safeDate)
+                            DispatchQueue.main.async {
+                                self.similarSeries = results.results
+                            }
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
+                } else{
+                    print("Session Error")
+                }
+            }
+            task.resume()
+            
+        }
+        
     }
     
 }
