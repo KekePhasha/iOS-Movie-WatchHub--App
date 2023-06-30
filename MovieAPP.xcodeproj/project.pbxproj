@@ -23,6 +23,10 @@
 		90FE19192A4C756500FB389B /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE19182A4C756500FB389B /* SearchScreen.swift */; };
 		90FE191E2A4C947500FB389B /* ProfileHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE191D2A4C947500FB389B /* ProfileHost.swift */; };
 		90FE19202A4C972600FB389B /* ProfileSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE191F2A4C972600FB389B /* ProfileSummary.swift */; };
+		90FE19232A4DBE9B00FB389B /* Formater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE19222A4DBE9B00FB389B /* Formater.swift */; };
+		90FE19252A4DC92F00FB389B /* EpisodeViewSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE19242A4DC92F00FB389B /* EpisodeViewSingle.swift */; };
+		90FE19272A4DCF0400FB389B /* EpisodesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE19262A4DCF0400FB389B /* EpisodesListView.swift */; };
+		90FE19292A4ED5C000FB389B /* ProfileEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE19282A4ED5C000FB389B /* ProfileEdit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		90FE19182A4C756500FB389B /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		90FE191D2A4C947500FB389B /* ProfileHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHost.swift; sourceTree = "<group>"; };
 		90FE191F2A4C972600FB389B /* ProfileSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummary.swift; sourceTree = "<group>"; };
+		90FE19222A4DBE9B00FB389B /* Formater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formater.swift; sourceTree = "<group>"; };
+		90FE19242A4DC92F00FB389B /* EpisodeViewSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewSingle.swift; sourceTree = "<group>"; };
+		90FE19262A4DCF0400FB389B /* EpisodesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesListView.swift; sourceTree = "<group>"; };
+		90FE19282A4ED5C000FB389B /* ProfileEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEdit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +84,7 @@
 		90B3C6952A497D470037D88B /* MovieAPP */ = {
 			isa = PBXGroup;
 			children = (
+				90FE19212A4DBE7E00FB389B /* Controller */,
 				90B3C6AA2A49914C0037D88B /* Model */,
 				90B3C6A72A498AF20037D88B /* Info.plist */,
 				90B3C6A42A498A100037D88B /* Resources */,
@@ -126,6 +135,8 @@
 				90FE191C2A4C92FD00FB389B /* Profile */,
 				90FE191A2A4C92B300FB389B /* Tabs */,
 				90FE191B2A4C92DA00FB389B /* Helpers */,
+				90FE19242A4DC92F00FB389B /* EpisodeViewSingle.swift */,
+				90FE19262A4DCF0400FB389B /* EpisodesListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -165,8 +176,17 @@
 			children = (
 				90FE191D2A4C947500FB389B /* ProfileHost.swift */,
 				90FE191F2A4C972600FB389B /* ProfileSummary.swift */,
+				90FE19282A4ED5C000FB389B /* ProfileEdit.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		90FE19212A4DBE7E00FB389B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				90FE19222A4DBE9B00FB389B /* Formater.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,15 +264,19 @@
 				90FE18F42A4AE59900FB389B /* YouTubeVideoView.swift in Sources */,
 				90B3C6AC2A49917A0037D88B /* MovieDatabase.swift in Sources */,
 				90FE191E2A4C947500FB389B /* ProfileHost.swift in Sources */,
+				90FE19292A4ED5C000FB389B /* ProfileEdit.swift in Sources */,
+				90FE19272A4DCF0400FB389B /* EpisodesListView.swift in Sources */,
 				90B3C6B12A49ACA60037D88B /* MovieManagerAPI.swift in Sources */,
 				90B3C6992A497D470037D88B /* HomeScreen.swift in Sources */,
 				90B3C6972A497D470037D88B /* MovieAPPApp.swift in Sources */,
 				90B3C6AF2A49A6300037D88B /* TrendingRow.swift in Sources */,
 				90FE18F22A49D1FB00FB389B /* VideoDetailedView.swift in Sources */,
+				90FE19252A4DC92F00FB389B /* EpisodeViewSingle.swift in Sources */,
 				90FE19172A4C755900FB389B /* SeriesScreen.swift in Sources */,
 				90B3C6B32A49BA320037D88B /* TrendingItem.swift in Sources */,
 				90FE19192A4C756500FB389B /* SearchScreen.swift in Sources */,
 				90FE19202A4C972600FB389B /* ProfileSummary.swift in Sources */,
+				90FE19232A4DBE9B00FB389B /* Formater.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

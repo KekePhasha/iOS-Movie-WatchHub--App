@@ -20,7 +20,7 @@ struct SearchScreen: View {
                         .textFieldStyle(.roundedBorder)
                 }
                     
-                Picker("Tyoe", selection: $selection)  {
+                Picker("Type", selection: $selection)  {
                     Text("Movie")
                     Text("Series")
                    

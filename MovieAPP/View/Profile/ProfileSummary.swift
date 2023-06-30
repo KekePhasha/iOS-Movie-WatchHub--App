@@ -18,15 +18,15 @@ struct ProfileSummary: View {
 //                        .overlay {
 //                          Gradient(colors: [Color])
 //                        }
-                Button {
-                    
-                } label: {
-                    Label("Edit", systemImage: "camera")
-                        .foregroundColor(.red)
-                        .font(.system(size: 35))
-
-                        .labelStyle(.iconOnly)
-                }
+//                Button {
+//
+//                } label: {
+//                    Label("Edit", systemImage: "camera")
+//                        .foregroundColor(.red)
+//                        .font(.system(size: 35))
+//
+//                        .labelStyle(.iconOnly)
+//                }
 
                
             
