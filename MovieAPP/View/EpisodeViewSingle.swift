@@ -36,6 +36,7 @@ struct EpisodeViewSingle: View {
                     Text("Mins")
                 }
             }
+            Spacer()
         }
     }
 }
