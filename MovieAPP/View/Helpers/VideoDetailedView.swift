@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct VideoDetailedView: View {
-    var trend: Results = Results(id: 385687 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
+    var trend: Results = Results(id: 1418 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
     
-    var type: String?
+    var type: String? = "tv"
 
     
     @ObservedObject var searchMovieID = MovieManagerAPI()
+    @StateObject private var listVM = ListViewModel ()
     
     var formater = Formater()
     
@@ -32,7 +33,7 @@ struct VideoDetailedView: View {
     }
     
     var body: some View {
-        ScrollView {
+        List {
          
             VStack(alignment: .leading) {
                 AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(trend.poster_path)"), content: {
@@ -63,9 +64,9 @@ struct VideoDetailedView: View {
                         Text(formater.formatYear(searchMovieID.searchMovieID.release_date))
                             .font(.subheadline)
                     } else {
-                        Text(String ("Testing"))
+                        Text("\(String (searchMovieID.searchSeriesId.episode_run_time.first ?? 0))min")
                             .font(.subheadline)
-                        Text("Testing")
+                        Text(formater.formatYear(searchMovieID.searchSeriesId.first_air_date))
                             .font(.subheadline)
                     }
                 }
@@ -167,25 +168,43 @@ struct VideoDetailedView: View {
                           
                           
                             Menu("Season \(seasonNumber)") {
-                                Button("Season 1") {
-                                    print("name")
-                                    seasonNumber = 1
+                                ForEach(1...(searchMovieID.searchSeriesId.number_of_seasons ?? 0), id: \.self) { num in
+                                    Button("Season \(num)") {
+                                        seasonNumber = num
+                                    }
                                 }
-                               Text("keke")
-                            }
-                        
-
+                                .onAppear(perform: {
+                                    Task {
+                                     
+                                        await listVM.season(seasonId: trend.id, seasonNum: seasonNumber)
+                                      
+                                    }
+                                })
+                                .onChange(of: seasonNumber) { value in
+                                    Task {
+                                       
+                                        
+                                        await listVM.season(seasonId: trend.id, seasonNum: value)
+                                       
+                                    }
+                                }
+                                
                             
+                            }
+                                                    
                             Divider()
-                            ForEach(1...3, id: \.self) { _ in                                 EpisodeViewSingle()
-                            }
                             
-                        
-                        
+                            List(listVM.seasonResults){ item in
+                               
+                                EpisodeViewSingle(episode: item)
+                                   
+                            }
+                           
                            
                         }
                         
                     }
+                    .frame(height: 500)
                     .padding(.horizontal, 10)
                     .padding(.bottom, 10)
                 }
@@ -207,11 +226,13 @@ struct VideoDetailedView: View {
                 })
                 .padding(.horizontal, 10)
                 .padding(.bottom, 10)
+                
                    
                 
             }
-           
+            .listRowInsets(EdgeInsets())
         }
+        .listStyle(.inset)
         .navigationTitle(trend.title ?? trend.name!)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -222,10 +243,10 @@ struct VideoDetailedView: View {
                 searchMovieID.fetchSimialrMovies(trend.id)
                 
             } else {
-                print("Key: \(trend.id) ")
-                
+                               
                 searchMovieID.fetchSeachSeriesId(trend.id)
                 searchMovieID.fetchSimialrSeries(trend.id)
+                print(searchMovieID.searchSeriesId.first_air_date)
                
             }
           

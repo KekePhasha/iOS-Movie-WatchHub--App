@@ -28,4 +28,6 @@ class Formater {
         
       return "\(integer)h \(decimal)min"
     }
+    
+
 }

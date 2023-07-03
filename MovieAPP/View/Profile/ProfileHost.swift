@@ -11,7 +11,8 @@ struct ProfileHost: View {
     
     @Environment(\.editMode) var editMode
     @State private var users = ["Attack On Titains", "Black Mirror", "Fast X", "Demon Slayer"]
-    @State private var selection = "Movie"
+    @State private var selection = "movie"
+    private var mediaType = ["movie", "series"]
     
     var body: some View {
         VStack {
@@ -31,11 +32,12 @@ struct ProfileHost: View {
                 Text("WatchList")
                     .font(.headline)
                     .padding(.bottom, 5)
-               
+                
                 Picker("Type", selection: $selection)  {
-                    Text("Movie")
-                    Text("Series")
-                   
+                    ForEach(mediaType, id: \.self) {
+                        Text($0)
+                    }
+                    
                 }
                 .pickerStyle(.segmented)
                 HStack {
@@ -45,10 +47,10 @@ struct ProfileHost: View {
                 }
                 List( $users, id: \.self, editActions: .delete) { $user in
                     
-                        Text(user)
-                    }
-//                    .listStyle(.inset)
-            
+                    Text(user)
+                }
+                //                    .listStyle(.inset)
+                
             } else
             {
                 ProfileEdit()

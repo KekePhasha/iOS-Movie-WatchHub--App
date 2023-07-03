@@ -8,38 +8,69 @@
 import SwiftUI
 
 struct SearchScreen: View {
-    @State var selection = " "
+//    @ObservedObject var movieManagerAPI = MovieManagerAPI()
+    
+    @State private var searchText = " "
+    @State private var selection = "movie"
+    private var mediaType = ["movie", "tv"]
+    
+    @StateObject private var listVM = ListViewModel ()
     
     var body: some View {
         NavigationView {
-            List {
-               
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                    TextField("Search", text: $selection, prompt: Text("Search..."))
-                        .textFieldStyle(.roundedBorder)
-                }
-                    
+            
+            VStack {
                 Picker("Type", selection: $selection)  {
-                    Text("Movie")
-                    Text("Series")
-                   
+                    ForEach(mediaType, id: \.self) {
+                        Text($0)
+                    }
+                    
                 }
                 .pickerStyle(.segmented)
-                
-                Picker("Genre", selection: $selection)  {
-                    Text("Action")
-                    Text("Comdey")
-                   
+                .padding(.horizontal)
+                List(listVM.results) { item in
+                    NavigationLink(destination: VideoDetailedView(trend: item, type: selection)) {
+                        HStack(alignment: .top) {
+                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(item.poster_path)"), content: {
+                                image in
+                                image
+                //                    .renderingMode(.)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxHeight: 110)
+                                    .cornerRadius(5)
+
+                            }, placeholder: {
+                                ProgressView()
+
+                            }
+                            )
+                            Text((item.title ?? item.name) ?? "Nothing")
+                        }
+                    }
+                    
                 }
-                .pickerStyle(.inline)
-                
-                
+                //            .listStyle(.plain)
+                .searchable(text: $searchText)
+                .onChange(of: searchText, perform: { value in
+                    // aysnc
+                    
+                    Task {
+                        if !value.isEmpty && value.count > 3{
+                            // call search function  await
+                            await listVM.search(name: value, mediaType: selection)
+                           
+                        } else
+                        {
+                            listVM.results.removeAll()
+                        }
+                    }
+                })
+                .navigationTitle("Search")
             }
-            .navigationTitle("Search")
         }
         
-      
+        
     }
 }
 

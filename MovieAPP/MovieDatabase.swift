@@ -12,29 +12,29 @@ struct Trending: Codable {
     var results: [Results]
 }
 
-struct Results: Codable, Identifiable{
+struct Results: Codable, Identifiable {
     var id: Int = 385687
-    var title: String? = "Keke"
-    var name: String? = "Keke"
+    var title: String? = "Title"
+    var name: String? = "Name"
     var media_type: String? = "movie"
     var poster_path: String = "rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg"
     var vote_average: Double = 9.5
-    var image: any View {
-        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(poster_path)"), content: {
-            image in
-            image
-                .renderingMode(.original)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 141, height: 197)
-                .cornerRadius(5)
-            
-        }, placeholder: {
-            ProgressView()
-                
-        }
-        )
-    }
+    //    var image: any View {
+    //        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(poster_path)"), content: {
+    //            image in
+    //            image
+    //                .renderingMode(.original)
+    //                .resizable()
+    //                .aspectRatio(contentMode: .fill)
+    //                .frame(width: 141, height: 197)
+    //                .cornerRadius(5)
+    //
+    //        }, placeholder: {
+    //            ProgressView()
+    //
+    //        }
+    //        )
+    //    }
 }
 
 struct SearchMovieID: Codable {
@@ -50,7 +50,10 @@ struct SearchSeriesId: Codable {
     var overview: String = ""
     var vote_average: Double = 0
     var genres: [Genre] = [Genre(id: 0, name: "")]
-
+    var episode_run_time: [Int] = [10]
+    var first_air_date: String = " "
+    var number_of_seasons: Int? = 10
+    
 }
 
 struct Genre: Codable, Identifiable {
@@ -64,7 +67,7 @@ struct SearchTrailerMovieID: Codable {
 }
 
 struct Trailers: Codable {
-//    var id = UUID()
+    //    var id = UUID()
     var key: String = " "
     var type: String? = " "
     
@@ -76,3 +79,22 @@ struct Trailers: Codable {
         }
     }
 }
+
+struct MovieSearch: Codable {
+    var results: [Results]
+}
+
+struct SeriesSeasonSearch: Codable{
+    var episodes: [Episodes]
+    var _id: String
+}
+
+
+struct Episodes: Codable, Identifiable {
+    var id: Int
+    var episode_number: Int
+    var name: String
+    var overview: String
+    var still_path: String
+}
+

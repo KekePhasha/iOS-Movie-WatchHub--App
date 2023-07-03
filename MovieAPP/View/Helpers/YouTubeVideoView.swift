@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 import SwiftUI
 
+
 struct YouTubeVideoView: UIViewRepresentable {
     
     let videoId: String?
@@ -27,6 +28,9 @@ struct YouTubeVideoView: UIViewRepresentable {
                 }
                
             }
+        } else
+        {
+            return
         }
     }
 }
