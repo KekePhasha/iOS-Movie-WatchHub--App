@@ -15,20 +15,25 @@ struct TrendingItem: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(trend.poster_path)"), content: {
-                image in
-                image
-//                    .renderingMode(.)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 141, height: 197)
-                    .cornerRadius(5)
-
-            }, placeholder: {
-                ProgressView()
-
+            if let url = trend.poster_path  {
+                AsyncImage(url: URL(string:  "https://image.tmdb.org/t/p/original/\(url)"), content: {
+                    image in
+                    image
+                    //                    .renderingMode(.)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 141, height: 197)
+                        .cornerRadius(5)
+                    
+                }, placeholder: {
+                    ProgressView()
+                    
+                }
+                )
             }
-            )
+            else {
+                Text("No image")
+            }
                        
 //                Text(trend.title ?? trend.name!)
 //                    .font(.subheadline)

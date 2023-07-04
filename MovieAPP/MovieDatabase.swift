@@ -17,7 +17,7 @@ struct Results: Codable, Identifiable {
     var title: String? = "Title"
     var name: String? = "Name"
     var media_type: String? = "movie"
-    var poster_path: String = "rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg"
+    var poster_path: String? = "/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg"
     var vote_average: Double = 9.5
     //    var image: any View {
     //        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(poster_path)"), content: {
@@ -96,5 +96,6 @@ struct Episodes: Codable, Identifiable {
     var name: String
     var overview: String
     var still_path: String
+    var runtime: Int?
 }
 

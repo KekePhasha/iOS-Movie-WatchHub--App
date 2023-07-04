@@ -10,6 +10,7 @@ import SwiftUI
 struct MovieScreen: View {
     
     @ObservedObject var movieManagerAPI = MovieManagerAPI()
+    @State var showingProfile = false
     
     var body: some View {
         NavigationView {
@@ -82,11 +83,16 @@ struct MovieScreen: View {
             
             .toolbar {
                 Button {
-                    
+                    showingProfile.toggle()
                 } label: {
                     Label("User Profile", systemImage: "person.crop.circle")
                 }
 
+            }
+            
+            .sheet(isPresented: $showingProfile) {
+                ProfileHost()
+                    
             }
             
         }

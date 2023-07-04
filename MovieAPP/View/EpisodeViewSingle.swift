@@ -15,33 +15,32 @@ struct EpisodeViewSingle: View {
         
         
         HStack(alignment: .top) {
-//            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/dAyJqJ8KoglZysttC6BfVmDFQUt.jpg"), content: {
-//                image in
-//                image
-////                    .renderingMode(.)
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .frame(width: 141, height: 130)
-//                    .cornerRadius(5)
-//
-//            }, placeholder: {
-//                ProgressView()
-//
-//            }
-//            )
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original\(episode.still_path)"), content: {
+                image in
+                image
+//                    .renderingMode(.)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 141, height: 110)
+                    .cornerRadius(5)
+
+            }, placeholder: {
+                ProgressView()
+
+            }
+            )
             VStack(alignment: .leading) {
-                Text("Episode: \(episode.episode_number)")
+                Text("\(episode.episode_number). \(episode.name)")
                     .font(.headline)
-                Text(episode.name)
-                    .font(.subheadline)
-                    .padding(.bottom, 8)
-                Text("Overview:")
-                    .font(.headline)
+                    .padding(.bottom, 1)
                 Text(episode.overview)
-                HStack {
-                    Text("Aired Date:")
-                    Text("Mins")
+                    .frame(height: 80)
+                    .truncationMode(.tail)
+                if let runtime = episode.runtime {
+                    Text("\(runtime) Mins")
+                        .font(.caption)
                 }
+                Divider()
             }
             Spacer()
         }
@@ -50,6 +49,6 @@ struct EpisodeViewSingle: View {
 
 struct EpisodesView_Previews: PreviewProvider {
     static var previews: some View {
-        EpisodeViewSingle(episode: Episodes(id: 1, episode_number: 2, name: "Hello world", overview: "Welcome to Swift", still_path: "/kdfkdjf"))
+        EpisodeViewSingle(episode: Episodes(id: 1, episode_number: 2, name: "Hello world", overview: "Welcome to Swift", still_path: "/rxWlBXZhGWhumbLB8gAHyyW3ITD.jpg", runtime: 22))
     }
 }
