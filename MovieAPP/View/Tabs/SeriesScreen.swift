@@ -10,6 +10,7 @@ import SwiftUI
 struct SeriesScreen: View {
     
     @ObservedObject var movieManagerAPI = MovieManagerAPI()
+    @State var showingProfile = false
    
     var body: some View {
         NavigationView {
@@ -85,13 +86,17 @@ struct SeriesScreen: View {
             
             .toolbar {
                 Button {
-                    
+                    showingProfile.toggle()
                 } label: {
                     Label("User Profile", systemImage: "person.crop.circle")
                 }
 
             }
             
+            .sheet(isPresented: $showingProfile) {
+                ProfileHost()
+                    
+            }
         }
 //        .onAppear {
 //            UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Monoton-Regular", size: 40)!]

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct VideoDetailedView: View {
-    var trend: Results = Results(id: 385687 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
+    var trend: Results = Results(id: 1418 ,title: "Fast X", poster_path: "fiVW06jE7z9YnO4trhaMEdclSiC.jpg")
     
-    var type: String?
+    var type: String? = "tv"
 
     
     @ObservedObject var searchMovieID = MovieManagerAPI()
+    @StateObject private var listVM = ListViewModel ()
     
     var formater = Formater()
     
@@ -32,23 +33,27 @@ struct VideoDetailedView: View {
     }
     
     var body: some View {
-        ScrollView {
+        List {
          
             VStack(alignment: .leading) {
-                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(trend.poster_path)"), content: {
-                    image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 300)
-                        .cornerRadius(1)
-                    
-                }, placeholder: {
-                  
+                if let url = trend.poster_path  {
+                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/\(url)"), content: {
+                        image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 300)
+                            .cornerRadius(1)
+                        
+                    }, placeholder: {
+                        
                         ProgressView()
-                                            
+                        
+                    }
+                    )}
+                else {
+                    Text("No image")
                 }
-                )
              
                     Text(trend.title ?? trend.name!)
                         .font(.title)
@@ -62,12 +67,22 @@ struct VideoDetailedView: View {
                             .font(.subheadline)
                         Text(formater.formatYear(searchMovieID.searchMovieID.release_date))
                             .font(.subheadline)
+                            .padding(5)
+                            .foregroundColor(.white)
+                            .background(.gray)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
                     } else {
-                        Text(String ("Testing"))
+                        Text("\(String (searchMovieID.searchSeriesId.episode_run_time.first ?? 0))min")
                             .font(.subheadline)
-                        Text("Testing")
+                           
+                        Text(formater.formatYear(searchMovieID.searchSeriesId.first_air_date))
                             .font(.subheadline)
+                            .padding(5)
+                            .foregroundColor(.white)
+                            .background(.gray)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
                     }
+                    
                 }
                 .padding(.leading, 15)
                 HStack(spacing: 15) {
@@ -111,7 +126,7 @@ struct VideoDetailedView: View {
                 .padding(.horizontal, 15)
                 
                 
-                GroupBox("Overview:") {
+                GroupBox("Overview") {
                     VStack(alignment: .leading) {
                         if mediaType(type) == "movie"
                         {
@@ -126,18 +141,18 @@ struct VideoDetailedView: View {
                             {
                                 ForEach(searchMovieID.searchMovieID.genres) { genre in
                                     Text(genre.name)
-                                        .font(.caption)
+                                        .font(.subheadline)
                                         .padding(5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(.white)
                                         .background(.gray)
                                         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
                                 }
                             } else {
                                 ForEach(searchMovieID.searchSeriesId.genres) { genre in
                                     Text(genre.name)
-                                        .font(.caption)
+                                        .font(.subheadline)
                                         .padding(5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(.white)
                                         .background(.gray)
                                         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 20)))
                                 }
@@ -162,26 +177,37 @@ struct VideoDetailedView: View {
                 
                 
                 if mediaType(type) != "movie"{
-                    GroupBox("Episodes:") {
+                    GroupBox("Episodes") {
                         VStack(alignment: .leading) {
                           
                           
                             Menu("Season \(seasonNumber)") {
-                                Button("Season 1") {
-                                    print("name")
-                                    seasonNumber = 1
+                                ForEach(1...(searchMovieID.searchSeriesId.number_of_seasons ?? 0), id: \.self) { num in
+                                    Button("Season \(num)") {
+                                        seasonNumber = num
+                                    }
                                 }
-                               Text("keke")
-                            }
-                        
-
+                               
+                                .onChange(of: seasonNumber) { value in
+                                    Task {
+                                       
+                                        
+                                        await listVM.season(seasonId: trend.id, seasonNum: value)
+                                       
+                                    }
+                                }
+                                
                             
+                            }
+                                                    
                             Divider()
-                            ForEach(1...3, id: \.self) { _ in                                 EpisodeViewSingle()
-                            }
                             
-                        
-                        
+                            ForEach(listVM.seasonResults){ item in
+                               
+                                EpisodeViewSingle(episode: item)
+                                   
+                            }
+                           
                            
                         }
                         
@@ -192,7 +218,7 @@ struct VideoDetailedView: View {
                 
                 
                 
-                GroupBox("Simialr To:", content: {
+                GroupBox("Simialr To", content: {
                     ZStack(alignment: .leading) {
                         HStack {
                             if mediaType(type) == "movie"
@@ -207,11 +233,13 @@ struct VideoDetailedView: View {
                 })
                 .padding(.horizontal, 10)
                 .padding(.bottom, 10)
+                
                    
                 
             }
-           
+            .listRowInsets(EdgeInsets())
         }
+        .listStyle(.inset)
         .navigationTitle(trend.title ?? trend.name!)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -222,10 +250,14 @@ struct VideoDetailedView: View {
                 searchMovieID.fetchSimialrMovies(trend.id)
                 
             } else {
-                print("Key: \(trend.id) ")
-                
+                               
                 searchMovieID.fetchSeachSeriesId(trend.id)
                 searchMovieID.fetchSimialrSeries(trend.id)
+                Task {
+                    
+                       await listVM.season(seasonId: trend.id, seasonNum: seasonNumber)
+                  
+                }
                
             }
           
